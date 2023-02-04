@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4f861667ed340b64b9c37010d72a796b
+guid: b45332b6e572a8a47bce01728d7cd503
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -42,12 +42,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 150
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -1501,7 +1501,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PixelFarm_Tileset_31: -56083562
+      PixelFarm_Tileset_34: 1411344059
       PixelFarm_Tileset_30: -1651110418
       PixelFarm_Tileset_39: 194496701
       PixelFarm_Tileset_45: -1281710725
@@ -1566,7 +1566,7 @@ TextureImporter:
       PixelFarm_Tileset_23: 1502894007
       PixelFarm_Tileset_60: 1120288109
       PixelFarm_Tileset_42: -797000973
-      PixelFarm_Tileset_34: 1411344059
+      PixelFarm_Tileset_31: -56083562
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
