@@ -1006,9 +1006,10 @@ GameObject:
   - component: {fileID: 1893172096}
   - component: {fileID: 1893172101}
   - component: {fileID: 1893172100}
+  - component: {fileID: 1893172102}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1025,9 +1026,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6a301ac8ccd154e85404d0f981d910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missile: {fileID: 0}
-  tentacle: {fileID: 0}
-  enemy: {fileID: 0}
+  missile: {fileID: 930201962301874281, guid: 1e64d3b1064f1bc40baf19d3dc21d996, type: 3}
+  tentacle: {fileID: 8606128928809459786, guid: dc88970bf8806ba4e9d9d7e158eac1ab, type: 3}
+  enemy: {fileID: 7030627620709858126, guid: b872d5cb80e684b4aa6df53240070251, type: 3}
 --- !u!95 &1893172097
 Animator:
   serializedVersion: 5
@@ -1160,6 +1161,27 @@ MonoBehaviour:
   shotgun: 0
   shotGun: {fileID: 0}
   boss: 1
+--- !u!50 &1893172102
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893172095}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &2108810785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,7 +1261,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108810785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.2201, y: -76.22094, z: -10}
+  m_LocalPosition: {x: -21.220154, y: -76.22094, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1258,7 +1280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetsPPU: 16
+  m_AssetsPPU: 32
   m_RefResolutionX: 640
   m_RefResolutionY: 360
   m_UpscaleRT: 0

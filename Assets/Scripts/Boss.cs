@@ -51,22 +51,23 @@ public class Boss : MonoBehaviour
     {
         for(int i = 0; i < 10; i++)
         {
-            yield return new WaitForSeconds(2f);
-            Instantiate(missile);
+            yield return new WaitForSeconds(1.5f);
+            GameObject m= Instantiate(missile);
+            m.transform.position = transform.position;
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         attacking = false;
         currentAttack = Attacks.Tentacles;
 
     }
     public IEnumerator Tentacles()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 7; i++)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
             SpawnTentacles();
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         attacking = false;
         currentAttack = Attacks.Summons;
 
@@ -77,6 +78,8 @@ public class Boss : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             SpawnEnemies();
+            SpawnEnemies();
+            SpawnEnemies();
         }
         yield return new WaitForSeconds(5f);
         attacking = false;
@@ -85,14 +88,13 @@ public class Boss : MonoBehaviour
     }
     public void SpawnTentacles()
     {
-        Instantiate(tentacle);
-        Instantiate(tentacle);
-        Instantiate(tentacle);
+        GameObject t = Instantiate(tentacle);
+        t.transform.position = GameManager.Instance.player.position+new Vector3(0,0.8f,0);
     }
     public void SpawnEnemies()
     {
-        Instantiate(enemy);
-        Instantiate(enemy);
+        GameObject e = Instantiate(enemy);
+        e.transform.position = new Vector3(Random.Range(-38, -7), Random.Range(-8, -37));
     }
     
 }

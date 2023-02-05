@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     Rigidbody2D rb;
-    float speed = 9f;
+    float speed = 12f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
     }
     IEnumerator Die()
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.6f);
         Destroy(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D collision)

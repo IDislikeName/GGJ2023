@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 351501924, guid: 4de5a766d4c67f544b58a0fb438e0fea, type: 3}
+  m_Sprite: {fileID: 157732534, guid: 828e1c84e7ba7e5479c9daeb5ff98206, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,6 +106,9 @@ MonoBehaviour:
   currentHp: 0
   sr: {fileID: 0}
   dead: 0
+  shotgun: 0
+  shotGun: {fileID: 0}
+  boss: 0
 --- !u!50 &7030627620709858124
 Rigidbody2D:
   serializedVersion: 4

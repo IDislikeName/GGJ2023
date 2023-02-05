@@ -12,6 +12,8 @@ public class Spawner : MonoBehaviour
     LayerMask obs;
     public GameObject shotgun;
     bool gunSpawned = false;
+    bool bossSpawned = false;
+    public GameObject boss;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +57,11 @@ public class Spawner : MonoBehaviour
                 currentCD -= Time.deltaTime;
             }
         }
-        
+        else if(GameManager.Instance. currentState == GameManager.GameState.Boss&&!bossSpawned)
+        {
+            bossSpawned = true;
+            boss.SetActive(true);
+        }
     }
     public void Spawn()
     {

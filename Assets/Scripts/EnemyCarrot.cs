@@ -23,13 +23,20 @@ public class EnemyCarrot : MonoBehaviour
 
     public Vector2 dir;
 
+    public bool ready = false;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        ready = false;
+        StartCoroutine(Ready());
     }
-
+    IEnumerator Ready()
+    {
+        yield return new WaitForSeconds(1f);
+        ready = true;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -37,22 +44,25 @@ public class EnemyCarrot : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.AddForce( moveSpeed*dir* Time.deltaTime);
-
-        if (rb.velocity.magnitude > maxSpeed)
+        if (ready)
         {
-            float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed, friction);
-            rb.velocity = rb.velocity.normalized * spd;
+            rb.AddForce(moveSpeed * dir * Time.deltaTime);
+
+            if (rb.velocity.magnitude > maxSpeed)
+            {
+                float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed, friction);
+                rb.velocity = rb.velocity.normalized * spd;
+            }
+            if (dir.x > 0)
+                sr.flipX = true;
+            else if (dir.x < 0)
+                sr.flipX = false;
         }
-        if (dir.x>0)
-            sr.flipX = true;
-        else if (dir.x<0)
-            sr.flipX = false;
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && currentCD <= 0)
+        if (collision.gameObject.CompareTag("Player") && currentCD <= 0&&ready)
         {
             currentCD = attackCD;
             Vector2 dir = (collision.transform.position - transform.position).normalized;
@@ -61,7 +71,7 @@ public class EnemyCarrot : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && currentCD<= 0)
+        if (collision.gameObject.CompareTag("Player") && currentCD<= 0&&ready)
         {
             currentCD = attackCD;
             Vector2 dir = (collision.transform.position - transform.position).normalized;
