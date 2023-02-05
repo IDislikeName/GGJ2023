@@ -10,6 +10,9 @@ public class EnemyHealth : MonoBehaviour
     [HideInInspector]
     public SpriteRenderer sr;
     public bool dead;
+    public bool shotgun = false;
+    public GameObject shotGun;
+    public bool boss;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +43,8 @@ public class EnemyHealth : MonoBehaviour
     public void Die()
     {
         dead = true;
-        GameManager.Instance.enemyQuota -= 1;
+        if (shotgun)
+            Instantiate(shotGun);
         Destroy(gameObject);
     }
 }

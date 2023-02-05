@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentState = GameState.Playing;
+        waveNum = -1;
+        enemyQuota = 0;
     }
 
     // Update is called once per frame
@@ -60,9 +62,16 @@ public class GameManager : MonoBehaviour
             if (waveNum < Waves.Length - 1)
             {
                 waveNum++;
-                enemyQuota = Waves[waveNum];
+                StartCoroutine(wait());
+                
+                
             }
             
         }
+    }
+    public IEnumerator wait()
+    {
+        yield return new WaitForSeconds(5f);
+        enemyQuota = Waves[waveNum];
     }
 }

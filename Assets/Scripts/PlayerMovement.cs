@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
 
     public bool canMove = true;
 
+    public GameObject pitchfork;
+    public GameObject gun;
+    public bool unlockedGun = false;
+
+    public GameObject activeWeapon;
 
     
     // Start is called before the first frame update
@@ -31,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        activeWeapon = pitchfork;
     }
 
 
@@ -47,13 +53,45 @@ public class PlayerMovement : MonoBehaviour
         else if (mousePos.x < transform.position.x)
             sr.flipX = false;
 
+        if (Input.GetKeyDown(KeyCode.Q)&&unlockedGun)
+        {
+            if (activeWeapon == pitchfork)
+            {
+                activeWeapon = gun;
+                pitchfork.SetActive(false);
+                gun.SetActive(true);
+            }
+            else if (activeWeapon == gun)
+            {
+                activeWeapon = pitchfork;
+                gun.SetActive(false);
+                pitchfork.SetActive(true);
+            }
+
+        }
+
+
         //point weapon
-        if(!weapon.GetComponentInChildren<Pitchfork>().attacking)
-            weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
-        if (weapon.rotation.eulerAngles.z > 180)
-            weapon.GetComponentInChildren<SpriteRenderer>().flipX = false;
-        else
-            weapon.GetComponentInChildren<SpriteRenderer>().flipX = true;
+        if (activeWeapon == pitchfork)
+        {
+            if (!weapon.GetComponentInChildren<Pitchfork>().attacking)
+                weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
+            if (weapon.rotation.eulerAngles.z > 180)
+                weapon.GetComponentInChildren<SpriteRenderer>().flipX = false;
+            else
+                weapon.GetComponentInChildren<SpriteRenderer>().flipX = true;
+        }
+        else if (activeWeapon == gun)
+        {
+            if (!weapon.GetComponentInChildren<Shotgun>().attacking)
+                weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
+            if (weapon.rotation.eulerAngles.z >180)
+                weapon.transform.localScale = new Vector3(-1, 1, 1);
+            else
+                weapon.transform.localScale = new Vector3(1, 1, 1);
+        }
+        
+        
 
         //walking animation
         if (move == Vector2.zero)
@@ -66,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove&& move != Vector2.zero)
         {
-            if (weapon.GetComponentInChildren<Pitchfork>().attacking)
+            if ((activeWeapon == pitchfork&&weapon.GetComponentInChildren<Pitchfork>().attacking)|| (activeWeapon == gun&& weapon.GetComponentInChildren<Shotgun>().attacking))
             {
                 rb.AddForce(move * moveSpeed * Time.deltaTime * 0.1f);
                 if (rb.velocity.magnitude > maxSpeed)

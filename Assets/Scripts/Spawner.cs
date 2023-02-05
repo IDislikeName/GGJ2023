@@ -10,6 +10,8 @@ public class Spawner : MonoBehaviour
     float currentCD = 0;
     [SerializeField]
     LayerMask obs;
+    public GameObject shotgun;
+    bool gunSpawned = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +23,30 @@ public class Spawner : MonoBehaviour
     {
         if (GameManager.Instance.currentState == GameManager.GameState.Playing)
         {
+            if (GameManager.Instance.waveNum == 0)
+                spawnTime = 7f;
+            if (GameManager.Instance.waveNum == 1)
+            {
+                spawnTime = 5f;
+                if(GameManager.Instance.enemyQuota==1)
+                if (!gunSpawned)
+                {
+                    GameManager.Instance.enemyQuota -= 1;
+                    gunSpawned = true;
+                    Instantiate(shotgun);
+
+                }
+            }
+                
+            if (GameManager.Instance.waveNum == 2)
+            {
+                spawnTime = 3f;
+                
+            }
+               
             if (currentCD <= 0&&GameManager.Instance.enemyQuota>0)
             {
+                GameManager.Instance.enemyQuota -= 1;
                 currentCD = spawnTime;
                 Spawn();
             }
