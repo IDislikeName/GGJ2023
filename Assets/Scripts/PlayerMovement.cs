@@ -48,7 +48,8 @@ public class PlayerMovement : MonoBehaviour
             sr.flipX = false;
 
         //point weapon
-        weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
+        if(!weapon.GetComponentInChildren<Pitchfork>().attacking)
+            weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
         if (weapon.rotation.eulerAngles.z > 180)
             weapon.GetComponentInChildren<SpriteRenderer>().flipX = false;
         else
@@ -65,30 +66,48 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove&& move != Vector2.zero)
         {
-            rb.AddForce(move * moveSpeed * Time.deltaTime);
-            if (rb.velocity.magnitude > maxSpeed)
+            if (weapon.GetComponentInChildren<Pitchfork>().attacking)
             {
-                float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed, friction);
-                rb.velocity = rb.velocity.normalized * spd;
+                rb.AddForce(move * moveSpeed * Time.deltaTime * 0.1f);
+                if (rb.velocity.magnitude > maxSpeed)
+                {
+                    float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed*0.1f, friction*3);
+                    rb.velocity = rb.velocity.normalized * spd;
+                }
             }
+
+            else
+            {
+                rb.AddForce(move * moveSpeed * Time.deltaTime);
+                if (rb.velocity.magnitude > maxSpeed)
+                {
+                    float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed, friction);
+                    rb.velocity = rb.velocity.normalized * spd;
+                }
+            }
+                
         }
         else
         {
             rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, friction);
         }
     }
-    public void TakeDamage()
+    public void TakeDamage(int damage,Vector2 knockback)
     {
         if (!GameManager.Instance.immune)
         {
-            GameManager.Instance.health -= 1;
+            GameManager.Instance.health -= damage;
+            rb.AddForce(knockback, ForceMode2D.Impulse);
             StartCoroutine(DamageCoroutine());
         }
     }
     public IEnumerator DamageCoroutine()
     {
         sr.color = Color.red;
+        GameManager.Instance.immune = true;
         yield return new WaitForSeconds(0.3f);
         sr.color = Color.white;
+        yield return new WaitForSeconds(0.2f);
+        GameManager.Instance.immune = false;
     }
 }

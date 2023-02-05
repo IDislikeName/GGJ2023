@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
     public int currentHp;
     [HideInInspector]
     public SpriteRenderer sr;
+    public bool dead;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHp <= 0)
+        if (currentHp <= 0&&!dead)
         {
             Die();
         }
@@ -38,6 +39,8 @@ public class EnemyHealth : MonoBehaviour
     }
     public void Die()
     {
+        dead = true;
+        GameManager.Instance.enemyQuota -= 1;
         Destroy(gameObject);
     }
 }

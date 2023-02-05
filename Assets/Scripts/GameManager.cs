@@ -19,21 +19,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    enum GameState
+    public enum GameState
     {
         Playing,
+        Boss,
         paused,
         Won,
         Lost
     };
-    [SerializeField]
-    GameState currentState;
+    public GameState currentState;
     public int health = 3;
     public bool immune = false;
     [SerializeField]
     GameObject lostScreen;
     [SerializeField]
     GameObject pauseScreen;
+    public int[] Waves;
+    public int waveNum;
+    public int enemyQuota;
 
 
     public GameObject player;
@@ -52,6 +55,15 @@ public class GameManager : MonoBehaviour
         {
             currentState = GameState.Lost;
             lostScreen.SetActive(true);
+        }
+        if (enemyQuota <= 0)
+        {
+            if (waveNum < Waves.Length - 1)
+            {
+                waveNum++;
+                enemyQuota = Waves[waveNum];
+            }
+            
         }
     }
 }

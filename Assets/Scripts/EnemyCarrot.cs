@@ -12,6 +12,16 @@ public class EnemyCarrot : MonoBehaviour
     float friction = 0.9f;
     public Rigidbody2D rb;
     public SpriteRenderer sr;
+    [SerializeField]
+    int damage = 1;
+    [SerializeField]
+    float knockback = 3000;
+    
+    [SerializeField]
+    float attackCD=2f;
+    float currentCD=0;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +32,7 @@ public class EnemyCarrot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        currentCD -= Time.deltaTime;
     }
     private void FixedUpdate()
     {
@@ -34,10 +44,28 @@ public class EnemyCarrot : MonoBehaviour
             float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed, friction);
             rb.velocity = rb.velocity.normalized * spd;
         }
-        if (rb.velocity.x > 0)
+        if (dir.x>0)
             sr.flipX = true;
-        else if (rb.velocity.x < 0)
+        else if (dir.x<0)
             sr.flipX = false;
 
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && currentCD <= 0)
+        {
+            currentCD = attackCD;
+            Vector2 dir = (collision.transform.position - transform.position).normalized;
+            collision.gameObject.GetComponent<PlayerMovement>().TakeDamage(damage,dir*knockback);
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && currentCD<= 0)
+        {
+            currentCD = attackCD;
+            Vector2 dir = (collision.transform.position - transform.position).normalized;
+            collision.gameObject.GetComponent<PlayerMovement>().TakeDamage(damage, dir * knockback);
+        }
     }
 }
