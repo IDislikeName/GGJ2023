@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class Menu : MonoBehaviour
 {
+    private bool mouseOver = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,5 +19,15 @@ public class Menu : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void NextRoom()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
