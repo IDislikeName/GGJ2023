@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject activeWeapon;
 
+    public AudioClip getHit;
     
     // Start is called before the first frame update
     void Start()
@@ -48,12 +49,15 @@ public class PlayerMovement : MonoBehaviour
         move = new Vector2(horiz, vert);
         
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (mousePos.x > transform.position.x)
-            sr.flipX = true;
-        else if (mousePos.x < transform.position.x)
-            sr.flipX = false;
+        if (canMove)
+        {
+            if (mousePos.x > transform.position.x)
+                sr.flipX = true;
+            else if (mousePos.x < transform.position.x)
+                sr.flipX = false;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Q)&&unlockedGun)
+        if (Input.GetKeyDown(KeyCode.Q)&&unlockedGun&&canMove)
         {
             if (activeWeapon == pitchfork)
             {
@@ -71,25 +75,29 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        //point weapon
-        if (activeWeapon == pitchfork)
+        if (canMove)
         {
-            if (!weapon.GetComponentInChildren<Pitchfork>().attacking)
-                weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
-            if (weapon.rotation.eulerAngles.z > 180)
-                weapon.GetComponentInChildren<SpriteRenderer>().flipX = false;
-            else
-                weapon.GetComponentInChildren<SpriteRenderer>().flipX = true;
+            //point weapon
+            if (activeWeapon == pitchfork)
+            {
+                if (!weapon.GetComponentInChildren<Pitchfork>().attacking)
+                    weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
+                if (weapon.rotation.eulerAngles.z > 180)
+                    weapon.GetComponentInChildren<SpriteRenderer>().flipX = false;
+                else
+                    weapon.GetComponentInChildren<SpriteRenderer>().flipX = true;
+            }
+            else if (activeWeapon == gun)
+            {
+                if (!weapon.GetComponentInChildren<Shotgun>().attacking)
+                    weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
+                if (weapon.rotation.eulerAngles.z > 180)
+                    weapon.transform.localScale = new Vector3(-1, 1, 1);
+                else
+                    weapon.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
-        else if (activeWeapon == gun)
-        {
-            if (!weapon.GetComponentInChildren<Shotgun>().attacking)
-                weapon.transform.up = (mousePos - (Vector2)transform.position).normalized;
-            if (weapon.rotation.eulerAngles.z >180)
-                weapon.transform.localScale = new Vector3(-1, 1, 1);
-            else
-                weapon.transform.localScale = new Vector3(1, 1, 1);
-        }
+        
         
         
 
@@ -133,8 +141,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!GameManager.Instance.immune)
         {
+            SoundManager.Instance.PlayEffect(getHit);
             GameManager.Instance.health -= damage;
             rb.AddForce(knockback, ForceMode2D.Impulse);
+            GameManager.Instance.UpdateHealth();
             StartCoroutine(DamageCoroutine());
         }
     }

@@ -28,25 +28,33 @@ public class GameManager : MonoBehaviour
         Lost
     };
     public GameState currentState;
-    public int health = 3;
+    public int health = 5;
+    public int MaxHealth = 5;
     public bool immune = false;
     [SerializeField]
     GameObject lostScreen;
     [SerializeField]
-    GameObject pauseScreen;
+    GameObject wonScreen;
     public int[] Waves;
     public int waveNum;
     public int enemyQuota;
+    public int enemiesLeft;
 
-
+    public bool waiting;
     public Transform player;
 
+    public Hearts hearts;
+
+    [SerializeField]
+    AudioClip scream;
+    bool played;
     // Start is called before the first frame update
     void Start()
     {
         currentState = GameState.Playing;
-        waveNum = -1;
-        enemyQuota = 0;
+        waveNum = 0;
+        enemyQuota = Waves[waveNum];
+        enemiesLeft = 0;
     }
 
     // Update is called once per frame
@@ -55,23 +63,42 @@ public class GameManager : MonoBehaviour
         if (health <= 0)
         {
             currentState = GameState.Lost;
+            if(!played)
+                SoundManager.Instance.PlayEffect(scream);
             lostScreen.SetActive(true);
+            player.GetComponent<PlayerMovement>().canMove = false;
+            player.GetComponent<Rigidbody2D>().constraints= RigidbodyConstraints2D.FreezePosition;
+            player.rotation = Quaternion.Euler(0,0,90);
         }
-        if (enemyQuota <= 0)
+        if (currentState == GameState.Won)
         {
-            if (waveNum < Waves.Length - 1)
+            wonScreen.SetActive(true);
+            player.GetComponent<PlayerMovement>().canMove = false;
+            immune = true;
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+        }
+        if (enemiesLeft <= 0&&enemyQuota<=0)
+        {
+            if (waveNum < Waves.Length - 1&&!waiting)
             {
+                waiting = true;
                 waveNum++;
                 StartCoroutine(wait());
                 
                 
             }
-            
+            if (waveNum == 3)
+                currentState = GameState.Boss;
         }
     }
     public IEnumerator wait()
     {
         yield return new WaitForSeconds(5f);
         enemyQuota = Waves[waveNum];
+        waiting = false;
+    }
+    public void UpdateHealth()
+    {
+        hearts.UpdateHealth();
     }
 }

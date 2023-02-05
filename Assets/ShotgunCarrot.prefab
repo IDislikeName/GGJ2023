@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6912952773553936178
 Transform:
   m_ObjectHideFlags: 0
@@ -103,13 +103,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf622e2495b2604ba86d3741ebf5257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 3
+  maxHp: 6
   currentHp: 0
   sr: {fileID: 0}
   dead: 0
   shotgun: 1
   shotGun: {fileID: 4466407745048566271, guid: 737767c0b51966246ad80a44fe556a80, type: 3}
   boss: 0
+  carrot: {fileID: 859001523543071323, guid: 9027ecc4e3a30c644bffe87ad50edda4, type: 3}
+  carrotHit: {fileID: 8300000, guid: 18c057365a6ac424880e7deecba7906f, type: 3}
 --- !u!50 &6912952773553936183
 Rigidbody2D:
   serializedVersion: 4
@@ -178,6 +180,7 @@ MonoBehaviour:
   knockback: 400
   attackCD: 1
   dir: {x: 0, y: 0}
+  ready: 0
 --- !u!95 &6912952773553936172
 Animator:
   serializedVersion: 5

@@ -19,6 +19,9 @@ public class Boss : MonoBehaviour
     GameObject enemy;
     bool attacking;
     EnemyHealth eh;
+
+    public float tim = 10f;
+    public AudioClip[] growls;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,19 @@ public class Boss : MonoBehaviour
             }
 
         }
+        if (eh.currentHp > 0)
+        {
+            if (tim <= 0)
+            {
+                SoundManager.Instance.PlayEffect(growls[Random.Range(0, 3)]);
+                tim = 10f;
+            }
+            else
+            {
+                tim -= Time.deltaTime;
+            }
+           
+        }
         
     }
     public IEnumerator Missiles()
@@ -53,6 +69,9 @@ public class Boss : MonoBehaviour
         {
             yield return new WaitForSeconds(1.5f);
             GameObject m= Instantiate(missile);
+            m.transform.position = transform.position;
+            yield return new WaitForSeconds(0.5f);
+            GameObject n = Instantiate(missile);
             m.transform.position = transform.position;
         }
         yield return new WaitForSeconds(3f);
@@ -64,7 +83,7 @@ public class Boss : MonoBehaviour
     {
         for (int i = 0; i < 7; i++)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
             SpawnTentacles();
         }
         yield return new WaitForSeconds(3f);
@@ -79,9 +98,8 @@ public class Boss : MonoBehaviour
             yield return new WaitForSeconds(1f);
             SpawnEnemies();
             SpawnEnemies();
-            SpawnEnemies();
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         attacking = false;
         currentAttack = Attacks.Missiles;
 

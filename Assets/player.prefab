@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   attacking: 0
-  attackCD: 0.8
+  attackCD: 1.2
   damage: 1
   knockboack: 300
   bullets: {fileID: 7527578342833286926, guid: c022d104236e960498e2ff4226f040bb, type: 3}
@@ -310,7 +310,7 @@ MonoBehaviour:
   player: {fileID: 0}
   attacking: 0
   attackCD: 0.5
-  damage: 1
+  damage: 2
   knockboack: 150
   hitbox: {fileID: 5749253247643547596}
 --- !u!95 &5749253247825188598

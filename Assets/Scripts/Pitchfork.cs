@@ -15,6 +15,8 @@ public class Pitchfork : MonoBehaviour
     public int damage = 1;
     public float knockboack = 200f;
     public GameObject hitbox;
+
+    public AudioClip thrust;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +26,7 @@ public class Pitchfork : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0) && !attacking && currentCD <= 0)
+        if (Input.GetMouseButton(0) && !attacking && currentCD <= 0&&GameManager.Instance.health>0)
         {
             Attack();
             currentCD = attackCD;
@@ -42,5 +44,9 @@ public class Pitchfork : MonoBehaviour
     public void Attack()
     {
         GetComponent<Animator>().SetTrigger("Attack");
+    }
+    public void Sound()
+    {
+        SoundManager.Instance.PlayEffect(thrust);
     }
 }

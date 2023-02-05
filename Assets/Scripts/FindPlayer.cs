@@ -63,8 +63,7 @@ public class FindPlayer : MonoBehaviour
         }
         else
         {
-           Vector3 dir = (GameManager.Instance.player.position - transform.position).normalized;
-            ec.dir = dir;
+            transform.position = GameManager.Instance.player.position + new Vector3(12,0,0);
         }
         
 

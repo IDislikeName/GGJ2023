@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField]
-    int maxHp;
+    public int maxHp;
     public int currentHp;
     [HideInInspector]
     public SpriteRenderer sr;
@@ -13,6 +13,9 @@ public class EnemyHealth : MonoBehaviour
     public bool shotgun = false;
     public GameObject shotGun;
     public bool boss;
+    public GameObject carrot;
+
+    public AudioClip carrotHit;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,9 +33,25 @@ public class EnemyHealth : MonoBehaviour
     }
     public void TakeDamage(int damage, Vector2 knockback)
     {
-        currentHp -= damage;
-        GetComponent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse);
-        StartCoroutine(DamageCoroutine());
+        if (!boss)
+        {
+            if (GetComponent<EnemyCarrot>().ready)
+            {
+                SoundManager.Instance.PlayEffect(carrotHit);
+                GetComponent<Animator>().SetTrigger("Hurt");
+                currentHp -= damage;
+                GetComponent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse);
+                StartCoroutine(DamageCoroutine());
+            }
+        }
+        else
+        {
+            SoundManager.Instance.PlayEffect(carrotHit);
+            currentHp -= damage;
+            GetComponent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse);
+            StartCoroutine(DamageCoroutine());
+        }
+        
     }
     public IEnumerator DamageCoroutine()
     {
@@ -44,7 +63,36 @@ public class EnemyHealth : MonoBehaviour
     {
         dead = true;
         if (shotgun)
-            Instantiate(shotGun);
+        {
+            GameObject s = Instantiate(shotGun);
+            s.transform.position = transform.position;
+        }
+
+        if (!boss)
+        {
+            GameManager.Instance.enemiesLeft--;
+            GetComponent<EnemyCarrot>().ready = false;
+            GetComponent<Animator>().SetTrigger("Die");
+        }
+        StartCoroutine(wait());
+    }
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(1f);
+        if (!boss)
+        {
+            if (Random.Range(0, 5) == 1)
+            {
+                GameObject c = Instantiate(carrot);
+                c.transform.position = transform.position;
+                c.GetComponent<SpriteRenderer>().flipX = sr.flipX;
+            }
+        }
+        else
+        {
+            GameManager.Instance.currentState = GameManager.GameState.Won;
+        }
+        
         Destroy(gameObject);
     }
 }

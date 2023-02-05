@@ -48,15 +48,20 @@ public class EnemyCarrot : MonoBehaviour
         {
             rb.AddForce(moveSpeed * dir * Time.deltaTime);
 
-            if (rb.velocity.magnitude > maxSpeed)
-            {
-                float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed, friction);
-                rb.velocity = rb.velocity.normalized * spd;
-            }
+            
             if (dir.x > 0)
                 sr.flipX = true;
             else if (dir.x < 0)
                 sr.flipX = false;
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed, friction);
+            rb.velocity = rb.velocity.normalized * spd;
         }
 
     }
