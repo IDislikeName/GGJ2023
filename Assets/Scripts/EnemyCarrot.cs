@@ -21,6 +21,7 @@ public class EnemyCarrot : MonoBehaviour
     float attackCD=2f;
     float currentCD=0;
 
+    public Vector2 dir;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,6 @@ public class EnemyCarrot : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector2 dir = (GameManager.Instance.player.transform.position - transform.position).normalized;
         rb.AddForce( moveSpeed*dir* Time.deltaTime);
 
         if (rb.velocity.magnitude > maxSpeed)

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7030627620709858125}
   - component: {fileID: 7030627620709858120}
   - component: {fileID: 7030627620709858135}
+  - component: {fileID: 1994658907}
   m_Layer: 0
   m_Name: Carrot
   m_TagString: Enemy
@@ -104,6 +105,7 @@ MonoBehaviour:
   maxHp: 3
   currentHp: 0
   sr: {fileID: 0}
+  dead: 0
 --- !u!50 &7030627620709858124
 Rigidbody2D:
   serializedVersion: 4
@@ -138,7 +140,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.11649096, y: 0}
+  m_Offset: {x: -0.038312912, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -149,7 +151,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2329819, y: 1}
+  m_Size: {x: 1.0766258, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &7030627620709858120
 MonoBehaviour:
@@ -171,6 +173,7 @@ MonoBehaviour:
   damage: 1
   knockback: 400
   attackCD: 1
+  dir: {x: 0, y: 0}
 --- !u!95 &7030627620709858135
 Animator:
   serializedVersion: 5
@@ -191,3 +194,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1994658907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7030627620709858126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb6b9d9297975f46b369fe5ecd85ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSize: 1
+  speed: 0.05
+  obstacles:
+    serializedVersion: 2
+    m_Bits: 64
+  searchShortcut: 0
+  snapToGrid: 1
+  drawDebugLines: 0
+  ec: {fileID: 0}
+  checkPosTime: 0.8

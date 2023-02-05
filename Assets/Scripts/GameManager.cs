@@ -39,13 +39,12 @@ public class GameManager : MonoBehaviour
     public int enemyQuota;
 
 
-    public GameObject player;
+    public Transform player;
 
     // Start is called before the first frame update
     void Start()
     {
         currentState = GameState.Playing;
-        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame

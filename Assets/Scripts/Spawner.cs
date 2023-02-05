@@ -8,10 +8,12 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     float spawnTime = 5f;
     float currentCD = 0;
+    [SerializeField]
+    LayerMask obs;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -37,9 +39,10 @@ public class Spawner : MonoBehaviour
         float randy = Random.Range(-10,10);
         Vector2 randv2 = new Vector2(randx, randy);
         Vector2 size = new Vector2(1, 1);
-        Collider2D col =  Physics2D.OverlapBox(randv2,size,0);
-        if (col!=null &&col.CompareTag("Obstacles"))
+        Collider2D col =  Physics2D.OverlapBox(randv2+(Vector2)GameManager.Instance.player.position,size,0,obs);
+        if (col!=null)
         {
+            Debug.Log("failed");
             Spawn();
         }
         else

@@ -71,11 +71,10 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(move * moveSpeed * Time.deltaTime * 0.1f);
                 if (rb.velocity.magnitude > maxSpeed)
                 {
-                    float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed*0.1f, friction*3);
+                    float spd = Mathf.Lerp(rb.velocity.magnitude, maxSpeed*0.1f, friction);
                     rb.velocity = rb.velocity.normalized * spd;
                 }
             }
-
             else
             {
                 rb.AddForce(move * moveSpeed * Time.deltaTime);
