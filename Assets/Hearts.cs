@@ -29,9 +29,13 @@ public class Hearts : MonoBehaviour
         {
             hearts[i].sprite = full;
         }
-        for (int i = GameManager.Instance.health; i < GameManager.Instance.MaxHealth; i++)
+        if (GameManager.Instance.health >= 0)
         {
-            hearts[i].sprite = empty;
+            for (int j = GameManager.Instance.health; j < GameManager.Instance.MaxHealth; j++)
+            {
+                hearts[j].sprite = empty;
+            }
         }
+        
     }
 }
